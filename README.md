@@ -16,9 +16,8 @@ The project leverages models such as Logistic Regression, Random Forest, and XGB
 Overview
 Dataset
 Installation
-Usage
+Techniques Used
 Models and Results
-Contributing
 License
 Acknowledgments
 
@@ -66,3 +65,46 @@ This project was developed using Google Colab, a cloud-based Jupyter environment
    - Colab pre-installs `pandas`, `numpy`, `matplotlib`, `seaborn`, and `scikit-learn`. Install additional libraries used in the notebook:
      !pip install category_encoders scikit-plot xgboost
 
+# Techniques Used
+
+* Data Preprocessing: Missing value imputation (mode for categorical like 'Perineum' and 'Sex of Baby'; custom conversions for 'Duration of Labour', 'Birth weight', 'GA', 'HIV Status'). Outlier detection via IQR and removal using Z-score threshold (3) on 'Gravida', 'Parity', 'Children Alive', 'Est Blood Loss'. Removed irrelevant columns ('Patient ID', 'B/U').
+* Encoding: LabelEncoder for 'Perineum', 'Delivery method', 'Past Obst Complications', 'Sex of Baby', 'HIV Status'. One-hot encoding for 'Abnormalities'.
+* Data Imbalance Handling: SMOTE oversampling on training data to balance binary classes.
+* Normalization: MinMaxScaler on features.
+* Exploratory Data Analysis (EDA): Summary statistics, missing/duplicate checks, unique values, histograms, scatter plots, pair plots, box plots, count plots, correlation heatmaps, bar plots, pie charts (e.g., blood loss categories).
+* Dimensionality Reduction: PCA to 15 components, with relative feature importance visualization (bar plot of summed absolute PCA components).
+* Evaluation: Train-test split (implied 80/20 from code), accuracy, precision, recall, F1-score, confusion matrices, classification reports. Grouped model comparison table for accuracies. ROC and precision-recall curves plotted for all models.
+* Key Predictors (from PCA/Feature Analysis): Top features include 'Birth weight', 'Duration of Labour', 'Parity', 'Abnormalities' variants, 'Gravida', 'Perineum', 'Delivery method', 'Past Obst Complications', 'Age', 'Children Alive', 'GA', 'Sex of Baby', 'HIV Status' (based on relative importance from PCA).
+
+# Models Implemented
+The notebook trains and evaluates the following classifiers:
+
+Logistic Regression
+Support Vector Machine (SVC)
+Decision Tree Classifier
+K-Nearest Neighbors (KNN) Classifier
+Multi-Layer Perceptron (MLP) Classifier
+Random Forest Classifier
+Extra Trees Classifier
+Stochastic Gradient Descent (SGD) Classifier
+Gradient Boosting Classifier
+AdaBoost Classifier
+XGBoost Classifier
+
+# Key Findings
+
+* Key Predictors: PCA highlights 'Birth weight', 'Duration of Labour', 'Parity', 'Abnormalities' (e.g., PIH, preterm labor), 'Delivery method', 'Gravida', 'Perineum', 'Past Obst Complications', 'Age', 'Children Alive', 'GA', 'Sex of Baby', 'HIV Status' as influential.
+
+* Visualizations: Correlation heatmaps, ROC/precision-recall curves, PCA feature importance bar plots, confusion matrices, histograms, scatter/pair/box/count plots, pie charts for blood loss categories.
+
+* Limitations: Small dataset (~223 records post-outlier removal), class imbalance (~2.5% PPH incidence) mitigated by SMOTE but may limit recall. Potential overfitting in training metrics.
+
+* Future Work: Hyperparameter tuning, cross-validation, larger datasets (e.g., Kenya ARC’s 1,576 records), additional features (hemoglobin, BMI).
+
+# License
+Distributed under the MIT License. See `LICENSE` file for more information.
+
+# Acknowledgments
+- Inspired by research from Kenya ARC cohort and papers like [Prediction of PPH using ML in Kenyan Population](https://pmc.ncbi.nlm.nih.gov/articles/PMC10419202/).
+- Libraries: Pandas, Scikit-learn, XGBoost, Imbalanced-learn.
+- Data: Anonymized; thanks to contributors in maternal health research.
